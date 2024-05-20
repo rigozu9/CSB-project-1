@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+</head>
+<body>
+    <h1>Chat Room</h1>
+    <p>Welcome, <strong>{{ username }}</strong>!</p>
+    <div id="chat-box">
+        {% for message in messages %}
+            <p><strong>{{ message.user.username }}:</strong> {{ message.content }} <em>{{ message.timestamp }}</em></p>
+        {% endfor %}
+    </div>
+    <form method="post" action=".">
+        {% csrf_token %}
+        <textarea name="content" placeholder="Type your message here"></textarea>
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>

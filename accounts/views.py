@@ -9,7 +9,7 @@ def register(request):
         if form.is_valid():
             user = form.save(commit=False)
             """
-                FLAW 3: A07:2021-Identification and Authentication Failures
+                FLAW 4: A02:2021-Cryptographic Failures
                 Password saved in db as is and not encrypted   
                 Fix commented under user.password
                 It hashes the password
@@ -27,14 +27,14 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         """
-            FLAW 3: A07:2021-Identification and Authentication Failures
-            Use Djangos authentication system to log in with hashed passwords. 
+            FLAW 4: A02:2021-Cryptographic Failures
+            Authenticate using plain text passwords instead of hashed.
             Fix commented under user
         """
         user = authenticate_user(username, password)
         #user = authenticate(request, username=username, password=password)  # Use Django's authentication system
         if user is not None:
-            login(request, user)  # Log the user in
+            login(request, user)
             return redirect('chat:chat')
         else:
             return render(request, 'accounts/login.html', {'error': 'Invalid username or password'})

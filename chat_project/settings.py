@@ -123,3 +123,31 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+"""
+    FLAW 5: A09:2021-Security Logging and Monitoring Failures
+    No logging of authentication attempts, successful or unsuccessful. 
+    Added django logging into settings.py. Commented under this
+"""
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': 'debug.log',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#         '': {  # Root logger
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#         },
+#     },
+# }

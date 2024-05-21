@@ -27,5 +27,8 @@
         {{ form.as_p }}
         <button type="submit">Send</button>
     </form>
+
+    <h2>Search Messages</h2>
+    <a href="{% url 'chat:search_messages' %}"><button type="button">Search Messages</button></a>
 </body>
 </html>

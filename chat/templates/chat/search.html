@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Messages</title>
+</head>
+<body>
+    <h1>Search Messages</h1>
+    <form method="get" action="{% url 'chat:search_messages' %}">
+        <input type="text" name="query" placeholder="Search for messages..." value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+    <h2>Results</h2>
+    <div id="search-results">
+        {% for result in results %}
+            <p>{{ result }}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

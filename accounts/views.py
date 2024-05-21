@@ -22,7 +22,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)  # Use Django's authentication system
         if user is not None:
             login(request, user)  # Log the user in
-            return redirect('chat')
+            return redirect('chat:chat')
         else:
             return render(request, 'accounts/login.html', {'error': 'Invalid username or password'})
     return render(request, 'accounts/login.html')

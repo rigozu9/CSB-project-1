@@ -6,15 +6,24 @@
 <body>
     <h1>Chat Room</h1>
     <p>Welcome, <strong>{{ username }}</strong>!</p>
-    <div id="chat-box">
-        {% for message in messages %}
-            <p><strong>{{ message.user.username }}:</strong> {{ message.content }} <em>{{ message.timestamp }}</em></p>
-        {% endfor %}
-    </div>
+
+    <h2>Send a Message</h2>
     <form method="post" action=".">
         {% csrf_token %}
-        <textarea name="content" placeholder="Type your message here"></textarea>
+        {{ form.as_p }}
         <button type="submit">Send</button>
+    </form>
+
+    <h2>Sent Messages</h2>
+    <div id="sent-messages">
+        {% for message in sent_messages %}
+            <p><strong>To {{ message.receiver.username }}:</strong> {{ message.content }} <em>{{ message.timestamp }}</em></p>
+        {% endfor %}
+    </div>
+
+    <h2>Your Messages</h2>
+    <form action="{% url 'chat:user_chat' username=username %}" method="get">
+        <button type="submit">View Your Messages</button>
     </form>
 </body>
 </html>

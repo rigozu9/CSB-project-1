@@ -15,7 +15,7 @@ def chat_view(request):
             message = form.save(commit=False)
             message.sender = request.user
             message.save()
-            return redirect('chat')
+            return redirect('chat:chat')
     else:
         form = MessageForm()
 
@@ -55,17 +55,18 @@ def user_chat_view(request, username):
 @login_required
 def search_messages(request):
     query = request.GET.get('query', '')
+    user = request.user
     if query:
         with connection.cursor() as cursor:
             """
                 FLAW 2:  A03:2021-Injection 
                 Fix commented below the cursor.execute this.
-                When you search with input (' OR '1'='1) you get all the messages in the database.
+                When you search with input (%' OR '1'='1' --) you get all the messages in the database.
                 You have to use parameterized SQL queries. 
                 %s is a placeholder in parameterized SQL queries
             """
-            cursor.execute(f"SELECT * FROM chat_message WHERE content LIKE '%{query}%'")
-            #cursor.execute("SELECT * FROM chat_message WHERE content LIKE %s", [f'%{query}%'])
+            cursor.execute(f"SELECT * FROM chat_message WHERE (sender_id = {user.id} OR receiver_id = {user.id}) AND content LIKE '%{query}%'")
+            #cursor.execute("SELECT * FROM chat_message WHERE (sender_id = %s OR receiver_id = %s) AND content LIKE %s", [user.id, user.id, f'%{query}%'])
             results = cursor.fetchall()
     else:
         results = []

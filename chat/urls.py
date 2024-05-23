@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import chat_view, user_chat_view, search_messages
 
-app_name = 'chat'  # Define the namespace
+app_name = 'chat'
 
 urlpatterns = [
     path('', chat_view, name='chat'),
